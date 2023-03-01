@@ -38,7 +38,16 @@ console.log(session);
         <>
           <h2>Oi {session.user.email}</h2>
           <p>Começo do evento</p>
+<<<<<<< HEAD
           
+=======
+<<<<<<< HEAD
+          
+          
+=======
+          <DatePicker placeholder="Escolher data" withAsterisk />
+>>>>>>> main
+>>>>>>> main
           <button onClick={() => signOut()}>Sair</button>
         </>
         :
