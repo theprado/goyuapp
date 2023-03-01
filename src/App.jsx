@@ -1,34 +1,52 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import  { useSession, useSupabaseClient, useSessionContext } from '@supabase/auth-helpers-react';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const session = useSession();  // tokens, when session exists we have a user
+  const supabase = useSupabaseClient(); // talk to supabase!
+  const { isLoading } = useSessionContext();
+
+  if(isLoading) {
+    return <></>
+  }
+
+async function googleSignIn() {
+  const  { error } =  await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      scopes: 'https://www.googleapis.com/auth/calendar'
+    }
+  });
+    if(error) {
+      alert("Erro ao conectar o provedor do Google com a Supabase");
+      console.log(error);
+    }
+}
+
+async function signOut() {
+  await supabase.auth.signOut();
+}
+
+console.log(session);
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div style={{width: "400px", margin: "30px auto"}}>
+        {session ?
+        <>
+          <h2>Oi {session.user.email}</h2>
+          <button onClick={() => signOut()}>Sair</button>
+        </>
+        :
+        <>
+          <button onClick={() => googleSignIn()}>Entrar com Google</button>
+        </>
+        }
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
