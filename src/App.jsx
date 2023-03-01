@@ -2,6 +2,10 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 import  { useSession, useSupabaseClient, useSessionContext } from '@supabase/auth-helpers-react';
+import { MantineProvider, Text } from '@mantine/core';
+import { DatePicker, Calendar, Month } from '@mantine/dates';
+
+
 
 function App() {
   const session = useSession();  // tokens, when session exists we have a user
@@ -37,6 +41,8 @@ console.log(session);
         {session ?
         <>
           <h2>Oi {session.user.email}</h2>
+          <p>Começo do evento</p>
+          <DatePicker placeholder="Escolher data" withAsterisk />
           <button onClick={() => signOut()}>Sair</button>
         </>
         :
