@@ -36,18 +36,9 @@ console.log(session);
       <div style={{width: "400px", margin: "30px auto"}}>
         {session ?
         <>
-          <h2>Oi {session.user.email}</h2>
+          <h2 className='text-3xl font-bold underline'>Oi {session.user.email}</h2>
           <p>Começo do evento</p>
-<<<<<<< HEAD
-          
-=======
-<<<<<<< HEAD
-          
-          
-=======
-          <DatePicker placeholder="Escolher data" withAsterisk />
->>>>>>> main
->>>>>>> main
+
           <button onClick={() => signOut()}>Sair</button>
         </>
         :
@@ -57,7 +48,7 @@ console.log(session);
         }
       </div>
     </div>
-  );
+  ); 
 }
 
 export default App;
